@@ -1,0 +1,20 @@
+.jogo-da-vida {
+    margin-top: 20px;
+  }
+  
+  .row {
+    display: flex;
+  }
+  
+  .cell {
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .cell.alive {
+    background-color: #000;
+  }
+  
