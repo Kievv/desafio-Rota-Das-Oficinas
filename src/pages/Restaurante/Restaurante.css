@@ -1,0 +1,35 @@
+/* Restaurante.css */
+
+.titulo-secao {
+    color: yellow;
+  }
+  
+  .lista-clientes {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .item-cliente {
+    margin-bottom: 10px;
+  }
+  
+  .botao-calcular {
+    background-color: yellow;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .lista-pagamentos {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .item-pagamento {
+    margin-bottom: 5px;
+  }
+  
+  /* Estilos adicionais conforme necessário */
+  

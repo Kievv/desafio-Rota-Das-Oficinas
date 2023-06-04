@@ -1,18 +1,19 @@
 import { NavLink } from 'react-router-dom';
+import './Navbar.css';
 
 const Navbar = () => {
   return (
     <>
       <div className="container">
-        <ul>
-          <li>
-            <NavLink to="/conversor">Conversor</NavLink>
+        <ul className="lista">
+          <li className="item-lista">
+            <NavLink to="/conversor">CONVERSOR</NavLink>
           </li>
-          <li>
-            <NavLink to="/jogo">Jogo da Vida</NavLink>
+          <li className="item-lista">
+            <NavLink to="/jogo">JOGO DA VIDA</NavLink>
           </li>
-          <li>
-            <NavLink to="/restaurante">Restaurante</NavLink>
+          <li className="item-lista">
+            <NavLink to="/restaurante">RESTAURANTE</NavLink>
           </li>
         </ul>
       </div>

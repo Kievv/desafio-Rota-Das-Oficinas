@@ -1,5 +1,8 @@
 *{
   box-sizing: border-box;
+  /* border: solid 1px red; */
+  margin: 0;
+  padding: 0;
 }
 html {
   height: 100%;
