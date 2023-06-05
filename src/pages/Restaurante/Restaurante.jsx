@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import AdicionarClientes from './AdicionarClientes';
+import './Restaurante.css';
+
+import Produtos from './Produtos';
+// import Produtos from './Produtos';
 
 const Restaurante = () => {
   // Estado para armazenar a lista de clientes
@@ -13,14 +17,15 @@ const Restaurante = () => {
     { nome: 'Rodízio Simples', valor: 70.0, consumidores: [] },
     { nome: 'Rodízio Executivo', valor: 85.0, consumidores: [] },
     { nome: 'Temaki', valor: 20.0, consumidores: [] },
+    { nome: 'Porção de Peixe', valor: 50.0, consumidores: [] },
   ]);
   // Estado para armazenar o valor a ser pago por cada cliente
   const [valorAPagar, setValorAPagar] = useState({});
   // Estado para armazenar a lista de clientes que pagarão a taxa de serviço
-  const [taxaServico, setTaxaServico] = useState([]);
+  const [taxaServico, setTaxaServico] = useState();
 
   // Função para adicionar um cliente com os produtos selecionados
-  const handleAdicionarCliente = (cliente, produtosSelecionados) => {
+  const handleAdicionarCliente = (cliente, produtosSelecionados, taxaServico) => {
     // Verifica se o cliente já existe na lista de clientes
     const clienteExistente = clientes.find((c) => c.nome === cliente);
 
@@ -28,13 +33,13 @@ const Restaurante = () => {
       // Caso o cliente já exista, atualiza os produtos do cliente existente
       const produtosAtualizados = [...clienteExistente.produtos, ...produtosSelecionados];
       const clientesAtualizados = clientes.map((c) =>
-        c.nome === cliente ? { ...c, produtos: produtosAtualizados } : c
+        c.nome === cliente ? { ...c, produtos: produtosAtualizados, taxaServico: taxaServico } : c
       );
 
       setClientes(clientesAtualizados);
     } else {
       // Caso o cliente não exista, adiciona o cliente com os produtos selecionados
-      setClientes([...clientes, { nome: cliente, produtos: produtosSelecionados }]);
+      setClientes(clientes.concat({ nome: cliente, produtos: produtosSelecionados, taxaServico: taxaServico }));
     }
   };
 
@@ -62,18 +67,18 @@ const Restaurante = () => {
   };
 
   // Função para calcular a divisão da conta entre os clientes
-  const calcularDivisaoConta = (clientes, produtos, taxaServico) => {
+  const calcularDivisaoConta = (clientes, produtos) => {
     const resultado = {};
 
     // Inicializa o objeto resultado com cada cliente e valor 0
     for (const cliente of clientes) {
-      resultado[cliente] = 0;
+      resultado[cliente.nome] = 0;
     }
 
     // Itera sobre cada cliente e produto para calcular o valor a ser pago por cada cliente
     for (const cliente of clientes) {
       for (const produto of produtos) {
-        if (produto.consumidores.includes(cliente)) {
+        if (produto.consumidores.includes(cliente.nome)) {
           if (
             produto.nome === 'Rodízio Simples' ||
             produto.nome === 'Rodízio Executivo' ||
@@ -81,15 +86,15 @@ const Restaurante = () => {
           ) {
             // Caso especial: se o produto for Rodízio Simples, Rodízio Executivo ou todos os clientes consumirem o Refrigerante
             // o valor do produto é somado diretamente ao resultado do cliente
-            resultado[cliente] += produto.valor;
-          } else if (produto.consumidores.filter((nome) => nome === cliente).length > 1) {
+            resultado[cliente.nome] += produto.valor;
+          } else if (produto.consumidores.filter((nome) => nome === cliente.nome).length > 1) {
             // Se o cliente consumir mais de um produto igual, o valor é multiplicado pela quantidade de produtos
-            let quantidade = produto.consumidores.filter((nome) => nome === cliente).length;
-            resultado[cliente] += produto.valor * quantidade;
+            let quantidade = produto.consumidores.filter((nome) => nome === cliente.nome).length;
+            resultado[cliente.nome] += produto.valor * quantidade;
           } else {
             // Se o cliente consumir um único produto, o valor é dividido pelo número de consumidores do produto
-            const quantidade = produto.consumidores.filter((nome) => nome === cliente).length;
-            resultado[cliente] += (produto.valor * quantidade) / produto.consumidores.length;
+            const quantidade = produto.consumidores.filter((nome) => nome === cliente.nome).length;
+            resultado[cliente.nome] += (produto.valor * quantidade) / produto.consumidores.length;
           }
         }
       }
@@ -97,9 +102,9 @@ const Restaurante = () => {
 
     // Aplica a taxa de serviço aos clientes que a pagam
     for (const cliente of clientes) {
-      const totalGasto = resultado[cliente];
-      if (totalGasto > 0 && taxaServico.includes(cliente)) {
-        resultado[cliente] += totalGasto * 0.1;
+      const totalGasto = resultado[cliente.nome];
+      if (totalGasto > 0 && cliente.taxaServico === true) {
+        resultado[cliente.nome] += totalGasto * 0.1;
       }
     }
 
@@ -109,11 +114,20 @@ const Restaurante = () => {
   // Função para calcular o valor a ser pago por cada cliente
   const calcularValorAPagar = () => {
     const resultado = calcularDivisaoConta(
-      clientes.map((cliente) => cliente.nome),
-      produtos,
-      taxaServico
+      clientes.filter((cliente) => cliente.nome),
+      produtos
     );
     setValorAPagar(resultado);
+  };
+
+  const handleCadastroProduto = (novoProduto, valorNovoProduto) => {
+    console.log(novoProduto);
+    console.log(valorNovoProduto);
+    if (novoProduto.trim() !== '' && valorNovoProduto !== 0) {
+      // setProdutos([...produtos, { nome: novoProduto, valor: valorNovoProduto, consumidores: [] }]);
+      setProdutos(produtos.concat({ nome: novoProduto, valor: +valorNovoProduto, consumidores: [] }));
+    }
+    console.log(produtos);
   };
 
   return (
@@ -128,13 +142,14 @@ const Restaurante = () => {
         {/* Renderiza a lista de clientes */}
         {clientes.map((cliente, index) => (
           <li key={index}>
-            {cliente.nome}
+            {cliente.nome} {console.log(cliente.taxaServico)}-
+            <p>Taxa de Serviço? {cliente.taxaServico === true ? 'Sim' : 'Não'}</p>
             <ul>
               {/* Renderiza os produtos consumidos por cada cliente */}
-              {cliente.produtos.map((produtoNome) => {
+              {cliente.produtos.map((produtoNome, index) => {
                 const produto = produtos.find((p) => p.nome === produtoNome);
                 return (
-                  <li key={produtoNome}>
+                  <li key={index}>
                     {produtoNome}, R$ {produto.valor}
                   </li>
                 );
@@ -159,6 +174,8 @@ const Restaurante = () => {
           </li>
         ))}
       </ul>
+
+      <Produtos handleCadastro={handleCadastroProduto} />
     </>
   );
 };

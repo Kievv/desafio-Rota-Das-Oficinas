@@ -4,16 +4,18 @@ const AdicionarClientes = ({ onAdicionarCliente, produtos, handleProdutoCheckbox
   // Estado para armazenar o nome do cliente e os produtos selecionados pelo cliente
   const [cliente, setCliente] = useState('');
   const [produtosSelecionados, setProdutosSelecionados] = useState([]);
+  const [taxaServico, setTaxaServico] = useState(false);
 
   // Função para adicionar o cliente com os produtos selecionados
   const handleAdicionarCliente = () => {
     // Verifica se o nome do cliente não está vazio
     if (cliente.trim() !== '') {
       // Chama a função `onAdicionarCliente` passando o nome do cliente e os produtos selecionados
-      onAdicionarCliente(cliente, produtosSelecionados);
+      onAdicionarCliente(cliente, produtosSelecionados, taxaServico);
       // Limpa os campos
       setCliente('');
       setProdutosSelecionados([]);
+      setTaxaServico(false);
     }
   };
 
@@ -35,12 +37,29 @@ const AdicionarClientes = ({ onAdicionarCliente, produtos, handleProdutoCheckbox
     }
   };
 
+  const handleTaxa = (event) => {
+    if (event.target.value === 'true') {
+      setTaxaServico(true);
+    } else {
+      setTaxaServico(false);
+    }
+  };
+
   return (
-    <div>
+    <div className="formularioCliente">
       <h2>Adicionar Clientes</h2>
-      <div>
-        <label htmlFor="nomeCliente">Nome do Cliente:</label>
-        <input id="nomeCliente" type="text" value={cliente} onChange={handleClienteChange} />
+      <div className="areaCliente">
+        <label htmlFor="nomeCliente" className="inputCliente">
+          Nome do Cliente:
+          <input id="nomeCliente" type="text" value={cliente} onChange={handleClienteChange} />
+        </label>
+        <div className="areaTaxaDeServico">
+          <label>
+            Taxa de Serviço
+            <input className="radioBtn" type="radio" name="taxa" id="taxa" value={true} onChange={handleTaxa} /> SIM
+            <input className="radioBtn" type="radio" name="taxa" id="taxa" value={false} onChange={handleTaxa} /> NÃO
+          </label>
+        </div>
       </div>
 
       <div>
