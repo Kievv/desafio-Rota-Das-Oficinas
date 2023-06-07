@@ -1,20 +1,86 @@
+/* Faça com que o tabuleiro do arquivo JogoDaVida.css seja quadrado e responsivo */
+.container-fluid{
+  display: flex;
+  
+  
+  z-index: 0;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  /* background-color: black; */
+}
+
+.image{
+  background-image: url("../../assets/jogo.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+.botao-container{
+  display: flex;
+  justify-content: space-around;
+}
+
 .jogo-da-vida {
     margin-top: 20px;
+    text-align: center;
+
   }
   
   .row {
     display: flex;
+    flex-wrap: nowrap;
   }
+
+  /* adicione um mediaquery para quando dermos resize na tela, o tamanho das células sejam reduzidas, adicione midias querys mais comuns */
   
   .cell {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
+    
     background-color: #fff;
     border: 1px solid #ccc;
     cursor: pointer;
   }
   
-  .cell.alive {
+  .alive {
     background-color: #000;
   }
+
+  @media (max-width: 767px) {
+    /* Estilos para dispositivos móveis ou telas com largura máxima de 767px */
+    .cell {
+      width: 5px;
+      
+      
+    }
+  }
+  
+  @media (min-width: 768px) and (max-width: 991px) {
+    /* Estilos para dispositivos com largura entre 768px e 991px */
+    .cell {
+      width: 10px;
+      
+      
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .cell {
+      width: 15px;
+      
+      
+    }
+  }
+
+  @media (min-width: 1200px) {
+    /* Estilos para telas com largura mínima de 1200px (monitores maiores) */
+    .cell {
+      width: 20px;
+      
+      
+    }
+  }
+  
   

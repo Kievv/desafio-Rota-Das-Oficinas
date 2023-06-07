@@ -1,6 +1,7 @@
 import PureModal from 'react-pure-modal';
 import 'react-pure-modal/dist/react-pure-modal.min.css';
 import { useState } from 'react';
+import ModalRota from '../../components/ModalRota/ModalRota';
 
 const Produtos = ({ handleCadastro }) => {
   const [modal, setModal] = useState(false);
@@ -20,36 +21,19 @@ const Produtos = ({ handleCadastro }) => {
     setProduto('');
     setValor('');
   };
+
+  const handleModal = () => {
+    setModal(true);
+  };
   return (
     <>
-      <PureModal
-        header="Cadastrar Produto"
-        footer={
-          <div>
-            <button>Cancel</button>
-            <button onClick={handleAdicionarProduto}>Cadastrar</button>
-          </div>
-        }
-        isOpen={modal}
-        closeButton="close"
-        closeButtonPosition="bottom"
-        onClose={() => {
-          setModal(false);
-          return true;
-        }}
-      >
-        <label htmlFor="nomeProduto">
-          Produto
-          <input type="text" name="produto" id="produto" value={produto} onChange={handleProduto} />
-        </label>
-        <label htmlFor="valorProduto">
-          Valor
-          <input type="number" name="valor" id="valor" value={valor} onChange={handleValor} />
-        </label>
-      </PureModal>
-      <button className="button" onClick={() => setModal(true)}>
-        Cadastrar Produtos
-      </button>
+      <ModalRota
+        onClick={handleAdicionarProduto}
+        onChangeProduto={handleProduto}
+        onChangeValor={handleValor}
+        dataProduto={produto}
+        dataValor={valor}
+      />
     </>
   );
 };

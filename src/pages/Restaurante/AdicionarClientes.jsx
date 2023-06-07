@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import DataContext from '../../services/DataContext';
+import ModalRotaCliente from '../../components/ModalRota/ModalRotaCliente';
 
-const AdicionarClientes = ({ onAdicionarCliente, produtos, handleProdutoCheckboxChange }) => {
+const AdicionarClientes = ({ onAdicionarCliente, handleProdutoCheckboxChange, valorAPagar }) => {
+  const { clientes, setClientes, produtos, mesa, setMesa } = useContext(DataContext);
   // Estado para armazenar o nome do cliente e os produtos selecionados pelo cliente
   const [cliente, setCliente] = useState('');
   const [produtosSelecionados, setProdutosSelecionados] = useState([]);
@@ -11,9 +14,10 @@ const AdicionarClientes = ({ onAdicionarCliente, produtos, handleProdutoCheckbox
     // Verifica se o nome do cliente não está vazio
     if (cliente.trim() !== '') {
       // Chama a função `onAdicionarCliente` passando o nome do cliente e os produtos selecionados
-      onAdicionarCliente(cliente, produtosSelecionados, taxaServico);
+      onAdicionarCliente(cliente, produtosSelecionados, taxaServico, mesa);
       // Limpa os campos
       setCliente('');
+      setMesa('');
       setProdutosSelecionados([]);
       setTaxaServico(false);
     }
@@ -26,7 +30,7 @@ const AdicionarClientes = ({ onAdicionarCliente, produtos, handleProdutoCheckbox
 
   // Função para lidar com a alteração da seleção de produtos, ao selecionar adiciona o produto a lista, ao deselecionar, o remove
   const handleProdutoCheckboxChangeInternal = (event, produtoNome) => {
-    const checked = event.target.checked;
+    const checked = event;
 
     if (checked) {
       setProdutosSelecionados([...produtosSelecionados, produtoNome]);
@@ -38,7 +42,7 @@ const AdicionarClientes = ({ onAdicionarCliente, produtos, handleProdutoCheckbox
   };
 
   const handleTaxa = (event) => {
-    if (event.target.value === 'true') {
+    if (event === true) {
       setTaxaServico(true);
     } else {
       setTaxaServico(false);
@@ -46,40 +50,15 @@ const AdicionarClientes = ({ onAdicionarCliente, produtos, handleProdutoCheckbox
   };
 
   return (
-    <div className="formularioCliente">
-      <h2>Adicionar Clientes</h2>
-      <div className="areaCliente">
-        <label htmlFor="nomeCliente" className="inputCliente">
-          Nome do Cliente:
-          <input id="nomeCliente" type="text" value={cliente} onChange={handleClienteChange} />
-        </label>
-        <div className="areaTaxaDeServico">
-          <label>
-            Taxa de Serviço
-            <input className="radioBtn" type="radio" name="taxa" id="taxa" value={true} onChange={handleTaxa} /> SIM
-            <input className="radioBtn" type="radio" name="taxa" id="taxa" value={false} onChange={handleTaxa} /> NÃO
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <label>Produtos:</label>
-        {produtos.map((produto) => (
-          <div key={produto.nome}>
-            <label>
-              <input
-                type="checkbox"
-                value={produto.nome}
-                checked={produtosSelecionados.includes(produto.nome)}
-                onChange={(event) => handleProdutoCheckboxChangeInternal(event, produto.nome)}
-              />
-              {produto.nome} (R$: {produto.valor})
-            </label>
-          </div>
-        ))}
-      </div>
-
-      <button onClick={handleAdicionarCliente}>Adicionar Cliente</button>
+    <div className="formularioCliente diagramacao">
+      <ModalRotaCliente
+        dataCliente={cliente}
+        onChangeCliente={handleClienteChange}
+        onClick={handleAdicionarCliente}
+        onChangeTaxa={handleTaxa}
+        onChangeConsumidos={handleProdutoCheckboxChangeInternal}
+        dataValor={valorAPagar}
+      />
     </div>
   );
 };

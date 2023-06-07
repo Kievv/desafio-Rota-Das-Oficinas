@@ -1,7 +1,19 @@
 .footer-holder{
     display: flex;
+    height: inherit;
     justify-content: space-around;
+    align-items: center;
     width: 100%;
     background-color: #FFA300;
    
+}
+
+h4{
+    color: white;
+    font-size: 20px;
+}
+
+h5{
+    color: white;
+    font-size: 12px;
 }

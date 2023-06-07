@@ -1,0 +1,58 @@
+
+.container-404{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    height: 100%;
+}
+.textoError{
+    font-size: 80px;
+    margin-bottom: 20vh;
+    
+}
+
+.container-404 a{
+  text-decoration: none;
+}
+
+.imageContainer{
+    background-image: url("../../assets/pexels-chanita-sykes-1094545.jpg");
+  background-repeat: -norepeat;
+  background-size: cover;
+  background-position: center;
+  
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.single-color {
+    color: steelblue;
+  }
+  
+  /* Agora, colocando um degradê */
+  .gradient {
+    /* Primeiro passo: definir um degradê como fundo */
+    background-image: linear-gradient(to bottom, rgb(223, 220, 55), rgb(212, 153, 44), rgb(236, 125, 20));
+    
+    /* Segundo passo: apagar do fundo tudo que não estiver imediatamente atrás de texto */
+    background-clip: text;
+    -webkit-background-clip: text; /* Alguns navegadores precisam do prefixo */
+  
+    /* Terceiro passo: apagar o texto, deixando apenas o fundo atrás dele */
+    -webkit-text-fill-color: transparent;
+  
+    /* Cor que contraste com o degradê, caso o navegador não suporte `background-clip: text` */
+    color: black;
+    
+  }
+  
+  /* Não relacionado ao degradê, apenas para melhorar a visualização */
+ 
+

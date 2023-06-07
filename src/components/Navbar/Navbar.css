@@ -1,4 +1,30 @@
- .container{
+.navbar{
+    height: 100%;
+    z-index: 1;
+    padding: 0 !important;
+    
+}
+
+.navbar-brand{
+    width: 25%;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-link{
+    font-weight: 900 !important;
+    color: rgba(255,255,255) !important;
+}
+
+.navbar-collapse{
+    justify-content: center;
+}
+.navbar-nav{
+    width: 50%;
+    justify-content: space-around;
+}
+
+.container{
     display: flex;
     justify-content: center;
     flex-direction: row;

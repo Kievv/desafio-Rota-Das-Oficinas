@@ -1,0 +1,39 @@
+.textoContainer{
+    margin: 3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.textoHomeH1{
+    font-size: 3em;
+    margin-bottom: 1em;
+}
+
+.textoHomeH2{
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+.ulHome{
+    list-style-type: none;
+}
+
+.liHome{
+    font-size: 1.5em;
+    margin: 1em;
+}
+
+
+
+.grupo{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+.grupo a{
+    
+    text-decoration: none;
+}

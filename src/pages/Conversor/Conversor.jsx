@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import BotaoRota from '../../components/BotaoRota/BotaoRota';
+import InputConversor from '../../components/InputConversor/InputConversor';
+import './Conversor.css';
 
 const ConversorRomano = () => {
   const [entrada, setEntrada] = useState('');
@@ -65,7 +68,7 @@ const ConversorRomano = () => {
     var resultado = '';
 
     if (numeroArabico <= 0 || numeroArabico >= 4000) {
-      return 'O número não pode ser maior que 3999 nem menor que 0';
+      return 'Numerus tantus esse non potest. Conare inter I et MMMCMXCIX.';
     }
 
     for (var i = 0; i < numerosArabicos.length; i++) {
@@ -80,16 +83,19 @@ const ConversorRomano = () => {
   };
 
   return (
-    <div>
-      <h1>Conversor Romano</h1>
-      <label>
-        Insira um número Romano ou Arábico:
-        <input type="text" value={entrada} onChange={handleEntradaChange} />
-      </label>
-      <button onClick={converterParaArabico}>Converter para Arábico</button>
-      <button onClick={converterParaRomano}>Converter para Romano</button>
-      <div>
-        Resultado: <span>{resultado}</span>
+    <div className="container image-conversor">
+      <div className="containerConversor">
+        <div className="row row-input">
+          <InputConversor text={'Insira um número Romano ou Arábico:'} onChangeValue={handleEntradaChange} />
+        </div>
+        <div className="row row-botoes">
+          <BotaoRota onClick={converterParaArabico} color={'warning'} texto={'Converter para Arábico'} />
+          <BotaoRota onClick={converterParaRomano} color={'warning'} texto={'Converter para Romano'} />
+        </div>
+        {/* Numerus tantus esse non potest. */}
+        <div>
+          Resultado: <span>{resultado}</span>
+        </div>
       </div>
     </div>
   );
