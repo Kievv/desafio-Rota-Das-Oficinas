@@ -27,6 +27,12 @@ const Home = () => {
               <BotaoErro texto="Calculadora Restaurante" color={'warning'} />
             </Link>
           </div>
+          <div className="grupo">
+            <li className="liHome">Também existe uma página de Erro</li>
+            <Link to="/aosepasjue">
+              <BotaoErro texto="Error404" color={'warning'} />
+            </Link>
+          </div>
         </ul>
         <p className="pHome">Caso prefira, também pode navegar pelo Menu</p>
       </div>
